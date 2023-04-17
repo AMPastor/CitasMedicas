@@ -10,7 +10,6 @@ import org.mapstruct.factory.Mappers;
 public interface PacienteMapper {
 
     PacienteMapper INSTANCE = Mappers.getMapper(PacienteMapper.class);
-
     PacienteDTO pacienteToPacienteDTO(Paciente paciente);
     Paciente pacienteDTOToPaciente(PacienteDTO pacienteDTO);
 

@@ -11,7 +11,6 @@ import java.util.ArrayList;
 @Mapper(componentModel = "spring")
 public interface MedicoMapper {
     MedicoMapper INSTANCE = Mappers.getMapper(MedicoMapper.class);
-
     Medico medicoDTOToMedico(MedicoDTO medicoDTO);
     MedicoDTO medicoToMedicoDTO(Medico medico);
 }
