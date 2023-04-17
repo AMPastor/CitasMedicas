@@ -8,7 +8,8 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "usuarios")
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy=InheritanceType.JOINED)
+//Abstract xq es una clase base que proporciona atributos comunes a las dos clases q extiende (medico y paciente)
 public abstract class Usuario {
 
     /*@Id

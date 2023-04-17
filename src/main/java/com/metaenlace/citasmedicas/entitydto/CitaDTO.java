@@ -8,7 +8,6 @@ import java.util.Date;
 @Getter
 @Setter
 public class CitaDTO {
-
     private long id;
     private Date fechaHora;
     private String motivoCita;

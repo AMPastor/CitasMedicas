@@ -8,7 +8,6 @@ import java.util.List;
 @Getter
 @Setter
 public class MedicoDTO {
-
     private long id;
     private String nombre;
     private String apellidos;

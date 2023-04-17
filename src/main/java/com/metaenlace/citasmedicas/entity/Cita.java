@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-@Entity(name = "cita")
+@Entity
 @Table(name = "citas")
 public class Cita {
 

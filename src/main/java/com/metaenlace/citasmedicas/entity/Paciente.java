@@ -9,7 +9,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@Entity(name = "paciente")
+@Entity
 public class Paciente extends Usuario {
 
     @Column(name = "numSeguridadSocial")
