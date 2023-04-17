@@ -13,7 +13,7 @@ import java.util.List;
 public class Paciente extends Usuario {
 
     @Column(name = "numSeguridadSocial")
-    private String nSS;
+    private String nss;
     @Column(name = "numTarjeta")
     private String numTarjeta;
     @Column(name = "telefono")
@@ -44,9 +44,9 @@ public class Paciente extends Usuario {
         super();
     }
 
-    public Paciente(String nSS, String numTarjeta, String telefono, String direccion, List<Medico> medicos) {
+    public Paciente(String nss, String numTarjeta, String telefono, String direccion, List<Medico> medicos) {
         super();
-        this.nSS = nSS;
+        this.nss = nss;
         this.numTarjeta = numTarjeta;
         this.telefono = telefono;
         this.direccion = direccion;

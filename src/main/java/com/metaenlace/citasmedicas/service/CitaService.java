@@ -23,12 +23,12 @@ import java.util.Optional;
 import java.util.Collections;
 import java.util.List;
 
+import static com.metaenlace.citasmedicas.mapper.CitaMapper.INSTANCE;
+
 @Service
 public class CitaService {
     @Autowired
     private CitaRepository citaRepository;
-    @Autowired
-    private CitaMapper citaMapper;
     @Autowired
     private PacienteRepository pacienteRepository;
     @Autowired
@@ -47,7 +47,7 @@ public class CitaService {
             throw new NotFoundException("Médico no encontrado");
         }
 
-        Cita cita = citaMapper.citaDTOToCita(citaDTO);
+        Cita cita = INSTANCE.citaDTOToCita(citaDTO);
         cita.setPaciente(paciente);
         cita.setMedico(medico);
         return citaRepository.save(cita);
@@ -62,9 +62,7 @@ public class CitaService {
         if(medicoOpt.isEmpty()){
             throw new NotFoundException("Médico no encontrado");
         }
-        Cita cita = citaMapper.citaDTOToCita(citaDTO);
-        //cita.setPaciente(pacienteOpt.get());
-        //cita.setMedico(medicoOpt.get());
+        Cita cita = INSTANCE.citaDTOToCita(citaDTO);
         cita.setId(id);
         return citaRepository.save(cita);
     }
@@ -73,7 +71,7 @@ public class CitaService {
         List<CitaDTO> lista = new ArrayList<>();
         Iterable<Cita> listaCitas = citaRepository.findAll();
         for(Cita cita : listaCitas){
-            CitaDTO citaDTO = citaMapper.citaToCitaDTO(cita);
+            CitaDTO citaDTO = INSTANCE.citaToCitaDTO(cita);
             lista.add(citaDTO);
         }
         return lista;
@@ -84,14 +82,14 @@ public class CitaService {
         if(cita == null){
             throw new NotFoundException("Cita no existe");
         }
-        return citaMapper.citaToCitaDTO(cita);
+        return INSTANCE.citaToCitaDTO(cita);
     }
 
     public void eliminarCita(long id){
         Optional<Cita> cita = citaRepository.findById(id);
         if(cita.isEmpty()){
             throw new NotFoundException("Cita no encontrada");
-        }else {
+        } else {
             citaRepository.deleteById(id);
         }
     }

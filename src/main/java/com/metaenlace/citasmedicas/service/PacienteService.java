@@ -101,7 +101,7 @@ public class PacienteService {
             paciente.setApellidos(pacienteDTO.getApellidos());
             paciente.setUsuario(pacienteDTO.getUsuario());
             paciente.setClave(pacienteDTO.getClave());
-            paciente.setNSS(pacienteDTO.getNss());
+            paciente.setNss(pacienteDTO.getNss());
             paciente.setNumTarjeta(pacienteDTO.getNumTarjeta());
             paciente.setTelefono(pacienteDTO.getTelefono());
             paciente.setDireccion(pacienteDTO.getDireccion());

@@ -17,7 +17,7 @@ public abstract class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuarios_seq_gen")
     @SequenceGenerator(name = "usuarios_seq_gen", sequenceName = "usuarios_seq", allocationSize = 1)
-    private Long id;
+    private long id;
 
     //private long id;
     @Column(name = "nombre")

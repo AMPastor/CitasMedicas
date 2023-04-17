@@ -1,5 +1,5 @@
-
 package com.metaenlace.citasmedicas.entitydto;
+
 import lombok.Getter;
 import lombok.Setter;
 import java.util.List;
@@ -19,3 +19,7 @@ public class PacienteDTO {
     private String telefono;
     private String direccion;
 }
+
+//medicasId y citasId son listas identificadores de objetos de clase Medico y Cita.
+//Son mejores que List<Medico> y List<Cita> xq mejoran la eficiencia en las consultas de la base de datos.
+

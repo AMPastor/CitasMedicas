@@ -1,8 +1,7 @@
 package com.metaenlace.citasmedicas.mapper;
 
-import com.metaenlace.citasmedicas.entitydto.PacienteDTO;
 import com.metaenlace.citasmedicas.entity.Paciente;
-
+import com.metaenlace.citasmedicas.entitydto.PacienteDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
