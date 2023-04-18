@@ -36,7 +36,7 @@ public class CitaService {
     @Autowired
     private MedicoRepository medicoRepository;
 
-    public Cita insertar(CitaDTO citaDTO){
+    /*public Cita insertar(CitaDTO citaDTO){
 
         Paciente paciente = pacienteRepository.findById(citaDTO.getPacienteId()).orElse(null);
         if(paciente == null){
@@ -53,7 +53,33 @@ public class CitaService {
         return citaRepository.save(cita);
     }
 
-    public Cita editarCita(Long id, CitaDTO citaDTO){
+     */
+
+    public CitaDTO create(CitaDTO citaDTO) {
+        Paciente paciente = pacienteRepository.findById(citaDTO.getPacienteId()).orElse(null);
+        if (paciente == null) {
+            throw new NotFoundException("Paciente no encontrado");
+        }
+        Medico medico = medicoRepository.findById(citaDTO.getMedicoId()).orElse(null);
+        if (medico == null) {
+            throw new NotFoundException("Médico no encontrado");
+        }
+        Cita cita = new Cita();
+        // Asigna los valores de los atributos de la entidad cita
+        // a partir de los valores del DTO citaDTO
+        cita.setFechaHora(citaDTO.getFechaHora());
+        cita.setMotivoCita(citaDTO.getMotivoCita());
+        cita.setPaciente(paciente);
+        cita.setMedico(medico);
+        // Guarda la entidad en la base de datos
+        citaRepository.save(cita);
+        // Crea un DTO a partir de la entidad guardada
+        CitaDTO savedCitaDTO = INSTANCE.citaToCitaDTO(cita);
+        // Devuelve el DTO creado
+        return savedCitaDTO;
+    }
+
+    public Cita update(Long id, CitaDTO citaDTO){
         Optional<Paciente> pacienteOpt = pacienteRepository.findById(citaDTO.getPacienteId());
         if(pacienteOpt.isEmpty()){
             throw new NotFoundException("Paciente no encontrado");
@@ -67,7 +93,7 @@ public class CitaService {
         return citaRepository.save(cita);
     }
 
-    public List<CitaDTO> listaCitas(){
+    public List<CitaDTO> findAll(){
         List<CitaDTO> lista = new ArrayList<>();
         Iterable<Cita> listaCitas = citaRepository.findAll();
         for(Cita cita : listaCitas){
@@ -77,7 +103,7 @@ public class CitaService {
         return lista;
     }
 
-    public CitaDTO buscarCita(long id){
+    public CitaDTO findById(long id){
         Cita cita = citaRepository.findById(id).orElse(null);
         if(cita == null){
             throw new NotFoundException("Cita no existe");
@@ -85,7 +111,7 @@ public class CitaService {
         return INSTANCE.citaToCitaDTO(cita);
     }
 
-    public void eliminarCita(long id){
+    public void deleteById(long id){
         Optional<Cita> cita = citaRepository.findById(id);
         if(cita.isEmpty()){
             throw new NotFoundException("Cita no encontrada");

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Map;
+import java.util.HashMap;
 
 @RestController
 @RequestMapping("/pacientes")
@@ -17,40 +19,70 @@ public class PacienteController {
     @Autowired
     private PacienteService pacienteService;
 
-    // Mostrar listado pacientes
+    //Mostrar listado pacientes
     @GetMapping("/lista")
-    public ResponseEntity<List<PacienteDTO>> findAll() {
+    public ResponseEntity<Object> findAll() {
         List<PacienteDTO> pacientesDTO = pacienteService.findAll();
-        return new ResponseEntity<>(pacientesDTO, HttpStatus.OK);
+        Map<String, Object> response = new HashMap<>();
+        response.put("Pacientes", pacientesDTO);
+        response.put("Mensaje", "Pacientes encontrados correctamente");
+        return ResponseEntity.ok().body(response);
     }
 
-    // Mostrar paciente según id
+    //Mostrar paciente según id
     @GetMapping("/{id}")
-    public ResponseEntity<PacienteDTO> findById(@PathVariable Long id) {
-        Optional<PacienteDTO> pacienteDTO = pacienteService.findById(id);
-        return pacienteDTO.map(response -> ResponseEntity.ok().body(response))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public ResponseEntity<Object> findById(@PathVariable Long id) {
+        try {
+            Optional<PacienteDTO> pacienteDTO = pacienteService.findById(id);
+            Map<String, Object> response = new HashMap<>();
+            if (pacienteDTO.isPresent()) {
+                response.put("Paciente", pacienteDTO.get());
+                response.put("Mensaje", "Paciente encontrado correctamente");
+                return ResponseEntity.ok().body(response);
+            } else {
+                response.put("Mensaje", "No se encontró ningún paciente con el ID especificado");
+                response.put("error", "No existe ningún paciente con el ID especificado");
+                response.put("status", HttpStatus.NOT_FOUND.value());
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+        } catch (Exception e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("error", "Error al buscar el paciente");
+            response.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            response.put("mensaje", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
     }
 
-    // Crear paciente
+    //Crear paciente
     @PostMapping("/crear")
-    public ResponseEntity<PacienteDTO> create(@RequestBody PacienteDTO pacienteDTO) {
+    public ResponseEntity<Object> create(@RequestBody PacienteDTO pacienteDTO) {
         PacienteDTO savedPacienteDTO = pacienteService.save(pacienteDTO);
-        return new ResponseEntity<>(savedPacienteDTO, HttpStatus.CREATED);
+        Map<String, Object> response = new HashMap<>();
+        response.put("Paciente", savedPacienteDTO);
+        response.put("Mensaje", "Paciente creado correctamente");
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    // Actualizar paciente
-    @PutMapping("/{id}")
-    public ResponseEntity<PacienteDTO> update(@PathVariable Long id, @RequestBody PacienteDTO pacienteDTO) {
+    //Actualizar paciente
+    @PutMapping("/editar/{id}")
+    public ResponseEntity<Object> update(@PathVariable Long id, @RequestBody PacienteDTO pacienteDTO) {
         PacienteDTO updatedPacienteDTO = pacienteService.update(id, pacienteDTO);
-        return new ResponseEntity<>(updatedPacienteDTO, HttpStatus.OK);
+        Map<String, Object> response = new HashMap<>();
+        response.put("Paciente", updatedPacienteDTO);
+        response.put("Mensaje", "Paciente actualizado correctamente");
+        return ResponseEntity.ok().body(response);
     }
+
 
     // Borrar paciente
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+    @DeleteMapping("/eliminar/{id}")
+    public ResponseEntity<Object> deleteById(@PathVariable Long id) {
         pacienteService.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        Map<String, Object> response = new HashMap<>();
+        response.put("Mensaje", "Paciente eliminado correctamente");
+        return ResponseEntity.ok().body(response);
     }
+
 }
 
