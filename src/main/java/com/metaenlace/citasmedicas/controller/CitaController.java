@@ -47,8 +47,8 @@ public class CitaController {
 
     //Crear cita:
     @PostMapping("/crear")
-    public ResponseEntity<Object> create(@RequestBody CitaDTO citaDTO) {
-        CitaDTO savedCitaDTO = citaService.create(citaDTO);
+    public ResponseEntity<Object> save(@RequestBody CitaDTO citaDTO) {
+        CitaDTO savedCitaDTO = citaService.save(citaDTO);
         Map<String, Object> response = new HashMap<>();
         response.put("Cita", savedCitaDTO);
         response.put("Mensaje", "Cita creada correctamente");

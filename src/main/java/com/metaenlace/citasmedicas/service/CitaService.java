@@ -1,22 +1,15 @@
 package com.metaenlace.citasmedicas.service;
 
 import com.metaenlace.citasmedicas.entitydto.CitaDTO;
-import com.metaenlace.citasmedicas.entitydto.MedicoDTO;
-import com.metaenlace.citasmedicas.entitydto.PacienteDTO;
 import com.metaenlace.citasmedicas.entity.Cita;
 import com.metaenlace.citasmedicas.entity.Medico;
 import com.metaenlace.citasmedicas.entity.Paciente;
-import com.metaenlace.citasmedicas.mapper.CitaMapper;
-import com.metaenlace.citasmedicas.mapper.MedicoMapper;
-import com.metaenlace.citasmedicas.mapper.PacienteMapper;
 import com.metaenlace.citasmedicas.repository.CitaRepository;
 import com.metaenlace.citasmedicas.repository.MedicoRepository;
 import com.metaenlace.citasmedicas.repository.PacienteRepository;
 import com.metaenlace.citasmedicas.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -36,26 +29,25 @@ public class CitaService {
     @Autowired
     private MedicoRepository medicoRepository;
 
-    /*public Cita insertar(CitaDTO citaDTO){
-
-        Paciente paciente = pacienteRepository.findById(citaDTO.getPacienteId()).orElse(null);
-        if(paciente == null){
-            throw new NotFoundException("Paciente no encontrado");
+    public List<CitaDTO> findAll(){
+        List<CitaDTO> lista = new ArrayList<>();
+        Iterable<Cita> listaCitas = citaRepository.findAll();
+        for(Cita cita : listaCitas){
+            CitaDTO citaDTO = INSTANCE.citaToCitaDTO(cita);
+            lista.add(citaDTO);
         }
-        Medico medico = medicoRepository.findById(citaDTO.getMedicoId()).orElse(null);
-        if(medico == null){
-            throw new NotFoundException("Médico no encontrado");
-        }
-
-        Cita cita = INSTANCE.citaDTOToCita(citaDTO);
-        cita.setPaciente(paciente);
-        cita.setMedico(medico);
-        return citaRepository.save(cita);
+        return lista;
     }
 
-     */
+    public CitaDTO findById(long id){
+        Cita cita = citaRepository.findById(id).orElse(null);
+        if(cita == null){
+            throw new NotFoundException("La cita no existe");
+        }
+        return INSTANCE.citaToCitaDTO(cita);
+    }
 
-    public CitaDTO create(CitaDTO citaDTO) {
+    public CitaDTO save(CitaDTO citaDTO) {
         Paciente paciente = pacienteRepository.findById(citaDTO.getPacienteId()).orElse(null);
         if (paciente == null) {
             throw new NotFoundException("Paciente no encontrado");
@@ -91,24 +83,6 @@ public class CitaService {
         Cita cita = INSTANCE.citaDTOToCita(citaDTO);
         cita.setId(id);
         return citaRepository.save(cita);
-    }
-
-    public List<CitaDTO> findAll(){
-        List<CitaDTO> lista = new ArrayList<>();
-        Iterable<Cita> listaCitas = citaRepository.findAll();
-        for(Cita cita : listaCitas){
-            CitaDTO citaDTO = INSTANCE.citaToCitaDTO(cita);
-            lista.add(citaDTO);
-        }
-        return lista;
-    }
-
-    public CitaDTO findById(long id){
-        Cita cita = citaRepository.findById(id).orElse(null);
-        if(cita == null){
-            throw new NotFoundException("Cita no existe");
-        }
-        return INSTANCE.citaToCitaDTO(cita);
     }
 
     public void deleteById(long id){

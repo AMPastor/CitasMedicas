@@ -10,8 +10,10 @@ public class CitaDTO {
     private long id;
     private Date fechaHora;
     private String motivoCita;
-    private long pacienteId;
-    private long medicoId;
+    private long pacienteId; //Duda
+    private long medicoId; //Duda
+    //private MedicoDTO medico;
+    //private PacienteDTO paciente;
     private long diagnosticoId;
 }
 
