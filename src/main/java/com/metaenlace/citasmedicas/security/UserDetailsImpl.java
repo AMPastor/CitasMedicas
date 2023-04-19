@@ -10,45 +10,44 @@ import java.util.Collections;
 
 @AllArgsConstructor
 public class UserDetailsImpl implements UserDetails {
+    private final Usuario user;
 
-    private final Usuario usuario;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
         return Collections.emptyList();
     }
 
     @Override
     public String getPassword() {
-        return usuario.getClave();
+        return user.getClave();
     }
 
     @Override
     public String getUsername() {
-        return usuario.getUsuario();
+        return user.getUsuario();
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 
     public String getNombre() {
-        return usuario.getNombre();
+        return user.getNombre();
     }
 }
