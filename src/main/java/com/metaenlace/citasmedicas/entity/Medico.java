@@ -10,6 +10,9 @@ import java.util.List;
 @Setter
 @Entity
 public class Medico extends Usuario{
+    /*@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;*/
 
     @Column(name = "numColegiado")
     private String numColegiado;

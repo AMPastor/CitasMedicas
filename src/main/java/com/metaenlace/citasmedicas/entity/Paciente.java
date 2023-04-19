@@ -12,6 +12,10 @@ import java.util.List;
 @Entity
 public class Paciente extends Usuario {
 
+    /*@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;*/
+
     @Column(name = "numSeguridadSocial")
     private String nss;
     @Column(name = "numTarjeta")

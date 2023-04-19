@@ -54,7 +54,7 @@ public class CitaController {
         response.put("Mensaje", "Cita creada correctamente");
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
-
+/*
     //Editar cita
     @PutMapping("/editar/{id}")
     public ResponseEntity update(@RequestBody CitaDTO citaDTO, @PathVariable Long id){
@@ -70,5 +70,7 @@ public class CitaController {
         response.put("Mensaje", "Cita eliminada correctamente");
         return ResponseEntity.ok(response);
     }
+
+ */
 
 }
