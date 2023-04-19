@@ -12,8 +12,6 @@ import lombok.Setter;
 //Abstract xq es una clase base que proporciona atributos comunes a las dos clases q extiende (medico y paciente)
 public abstract class Usuario {
 
-    /*@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)*/
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuarios_seq_gen")
     @SequenceGenerator(name = "usuarios_seq_gen", sequenceName = "usuarios_seq", allocationSize = 1)
